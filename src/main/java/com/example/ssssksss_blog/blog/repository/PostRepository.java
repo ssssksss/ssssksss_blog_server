@@ -1,0 +1,57 @@
+package com.example.ssssksss_blog.blog.repository;
+
+import com.example.ssssksss_blog.blog.dao.Post;
+import com.example.ssssksss_blog.blog.dao.SecondCategory;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * PackageName : com.example.ssssksss_blog.blog.repository
+ * FileName : PostRepository
+ * Author : 이 수 경
+ * Date : 2022-03-13
+ * Description :
+ */
+public interface PostRepository extends JpaRepository<Post,Long> {
+    @Modifying
+    @Query(value = "insert into post (title, description, content, second_href, position) VALUES (:title,:description, :content,:second_href," +
+        "(select count(temp.position)+1 from (select * from post where second_href = :second_href) as temp))", nativeQuery = true)
+    @Transactional
+    void savePost(
+            @Param("title") String title,
+            @Param("description") String description,
+            @Param("content") String content,
+            @Param("second_href") String secondHref
+    );
+
+    @Modifying
+    @Query(value = "select * from post where second_href = :second_href", nativeQuery = true)
+    @Transactional
+    Optional<List<Post>> findPostList(
+            @Param("second_href") String secondHref
+    );
+
+    @Query(value = "select * from post where second_href = :second_href and id = :id", nativeQuery = true)
+    Optional<Post> findPost(
+            @Param("second_href") String secondHref,
+            @Param("id") int id
+    );
+
+    @Modifying
+    @Query(value = "update post set content= :content, description=:description, title= :title where id= :id", nativeQuery = true)
+    @Transactional
+    void updatePost(
+            @Param("id") Long id,
+            @Param("title") String title,
+            @Param("description") String description,
+            @Param("content") String content
+    );
+
+}
