@@ -1,14 +1,13 @@
 package com.example.ssssksss_blog.blog.repository;
 
 import com.example.ssssksss_blog.blog.dao.Post;
-import com.example.ssssksss_blog.blog.dao.SecondCategory;
+import com.example.ssssksss_blog.blog.dao.PostList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,9 +31,10 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     );
 
     @Modifying
-    @Query(value = "select * from post where second_href = :second_href", nativeQuery = true)
+    @Query(value = "select id,title,description,second_href,position,like_number,modified_at,access_yn,user_id" +
+            " from post where second_href = :second_href", nativeQuery = true)
     @Transactional
-    Optional<List<Post>> findPostList(
+    Optional<List<PostList>> findPostList(
             @Param("second_href") String secondHref
     );
 

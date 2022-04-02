@@ -1,7 +1,7 @@
 package com.example.ssssksss_blog.blog.service;
 
 import com.example.ssssksss_blog.blog.dao.Post;
-import com.example.ssssksss_blog.blog.dao.SecondCategory;
+import com.example.ssssksss_blog.blog.dao.PostList;
 import com.example.ssssksss_blog.blog.dto.PostDto;
 import com.example.ssssksss_blog.blog.repository.PostRepository;
 import com.example.ssssksss_blog.commonDto.ResponseDataDto;
@@ -9,7 +9,6 @@ import com.example.ssssksss_blog.commonDto.ResponseStatusDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +35,8 @@ public class PostService {
         return ResponseEntity.ok().body(new ResponseStatusDto(200,"Post Success"));
     }
 
-    public ResponseEntity readPost(String fullHref) {
-        Optional<List<Post>> optionalPosts = postRepository.findPostList(fullHref);
+    public ResponseEntity arrayPost(String fullHref) {
+        Optional<List<PostList>> optionalPosts = postRepository.findPostList(fullHref);
         if(optionalPosts.isEmpty()){
             return ResponseEntity.ok().body(new ResponseStatusDto(200,"아무런 내용이 없습니다."));
         }

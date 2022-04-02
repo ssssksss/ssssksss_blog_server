@@ -40,8 +40,10 @@ public class Post {
     @Column(name="create_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createAt;
     @Column(name="access_yn", nullable = false, columnDefinition = "tinyint(1) default 1")
-    private boolean accessYn;
+    private Boolean accessYn;
     @Column(name="user_id", nullable = false, columnDefinition = "varchar(255) default 'ssssksss'")
     private String userId;
+
+
 
 }

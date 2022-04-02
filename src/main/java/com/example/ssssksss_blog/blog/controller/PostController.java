@@ -36,7 +36,7 @@ public ResponseEntity readPost(
 ) {
     String fullHref = "/" + firstHref + "/" + secondHref;
     System.out.println("fullHref : " + fullHref);
-    return postService.readPost(fullHref);
+    return postService.arrayPost(fullHref);
 }
 //    포스트 1개 조회
 @RequestMapping(value="/ssssksss/post/view", method= RequestMethod.GET)

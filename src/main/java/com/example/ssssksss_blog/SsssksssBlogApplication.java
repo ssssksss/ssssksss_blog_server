@@ -18,8 +18,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class SsssksssBlogApplication {
 	public static final String APPLICATION_LOCATIONS = "spring.config.location="
 //			+ "classpath:application.yml,"
-			+ "/usr/local/tomcat8-blog/application.yml";
-//			+ "C:/test/application.yml";
+//			+ "/usr/local/tomcat8-blog/application.yml";
+			+ "C:/test/application.yml";
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(SsssksssBlogApplication.class)
 				.properties(APPLICATION_LOCATIONS)
