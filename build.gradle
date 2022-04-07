@@ -12,7 +12,6 @@ bootWar {
 	archiveFileName='ssssksss_blog.war'
 	archiveVersion = "0.0.0"
 }
-
 war.enabled = true
 
 group = 'com.example'
