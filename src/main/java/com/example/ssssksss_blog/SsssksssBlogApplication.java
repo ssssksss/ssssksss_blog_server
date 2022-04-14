@@ -28,10 +28,10 @@ public class SsssksssBlogApplication extends SpringBootServletInitializer {
 				.run(args);
 	}
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return super.configure(builder);
-	}
+//	@Override
+//	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+//		return super.configure(builder);
+//	}
 }
 
 
