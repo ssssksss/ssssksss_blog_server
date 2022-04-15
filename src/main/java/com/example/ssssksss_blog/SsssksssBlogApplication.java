@@ -17,6 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 //
 @SpringBootApplication
+//extends SpringBootServletInitializer {
 public class SsssksssBlogApplication extends SpringBootServletInitializer {
 	public static final String APPLICATION_LOCATIONS = "spring.config.location="
 //			+ "classpath:application.yml,"
