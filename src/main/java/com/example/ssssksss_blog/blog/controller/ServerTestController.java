@@ -3,6 +3,9 @@ package com.example.ssssksss_blog.blog.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 /**
  * PackageName : com.example.ssssksss_blog.blog.controller
  * FileName : ServerTestController
@@ -13,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ServerTestController {
 
+    LocalDateTime localDateTime = LocalDateTime.now();
+
     @RequestMapping("/")
     public String index() throws Exception{
-        return "Hello World4";
+        return localDateTime.toString();
     }
 }

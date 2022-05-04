@@ -17,12 +17,8 @@ public class ResponseDataDto {
     private HashMap<String,Object> data;
     @Builder.Default private Boolean successFlag = true;
 
-    public ResponseDataDto(String msg, HashMap<String, Object> data, Boolean successFlag) {
-        this.msg = msg;
-        this.data = data;
-        this.successFlag = successFlag;
-    }
-    public ResponseDataDto(String msg, HashMap<String, Object> data) {
+    public ResponseDataDto(int statusCode, String msg, HashMap<String, Object> data) {
+        this.statusCode = statusCode;
         this.msg = msg;
         this.data = data;
     }

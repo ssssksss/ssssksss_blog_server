@@ -20,8 +20,9 @@ import java.util.Optional;
  */
 public interface PostRepository extends JpaRepository<Post,Long> {
     @Modifying
-    @Query(value = "insert into post (title, description, content, second_href, position) VALUES (:title,:description, :content,:second_href," +
-        "(select count(temp.position)+1 from (select * from post where second_href = :second_href) as temp))", nativeQuery = true)
+    @Query(value = "insert into post (title, description, content, second_href, position) VALUES (:title,:description,:content,:second_href," +
+        "(select count(temp.position)+1 from (select * from post where second_href = :second_href) as temp))"
+            , nativeQuery = true)
     @Transactional
     void savePost(
             @Param("title") String title,
@@ -30,9 +31,10 @@ public interface PostRepository extends JpaRepository<Post,Long> {
             @Param("second_href") String secondHref
     );
 
+
     @Modifying
     @Query(value = "select id,title,description,second_href,position,like_number,modified_at,access_yn,user_id" +
-            " from post where second_href = :second_href", nativeQuery = true)
+            " from post where second_href = :second_href and access_yn = 1", nativeQuery = true)
     @Transactional
     Optional<List<PostList>> findPostList(
             @Param("second_href") String secondHref
@@ -41,8 +43,9 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     @Query(value = "select * from post where second_href = :second_href and id = :id", nativeQuery = true)
     Optional<Post> findPost(
             @Param("second_href") String secondHref,
-            @Param("id") int id
+            @Param("id") Long id
     );
+//    Post findBySecondHrefAndId(String secondHref,Long id);
 
     @Modifying
     @Query(value = "update post set content= :content, description=:description, title= :title where id= :id", nativeQuery = true)
@@ -52,6 +55,13 @@ public interface PostRepository extends JpaRepository<Post,Long> {
             @Param("title") String title,
             @Param("description") String description,
             @Param("content") String content
+    );
+
+    @Modifying
+    @Query(value = "update post set access_yn = 0, delete_at = now() where id= :id", nativeQuery = true)
+//    실제로 삭제하지 않음
+    void deletePost(
+            @Param("id") Long id
     );
 
 }

@@ -5,23 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
-/**
- * PackageName : com.example.ssssksss_blog.commonDto
- * FileName : ResponseErrorDto
- * Author : 이 수 경
- * Date : 2022-04-22
- * Description :
- */
+import java.util.HashMap;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseErrorDto {
+public class ResponseErrorsDto {
 
     private static final long serialVersionUID = 1L;
 
     private int statusCode;
-    private String errorMsg;
+    private HashMap<String,Object> errorMsgs;
+
 }

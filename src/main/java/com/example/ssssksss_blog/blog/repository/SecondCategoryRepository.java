@@ -40,4 +40,6 @@ public interface SecondCategoryRepository  extends JpaRepository<SecondCategory,
     @Query(value="delete from second_category where second_href = :second_href", nativeQuery = true)
     @Transactional
     void deleteHref(@Param("second_href") String secondHref);
+
+
 }

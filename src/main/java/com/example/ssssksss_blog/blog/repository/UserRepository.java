@@ -1,6 +1,5 @@
 package com.example.ssssksss_blog.blog.repository;
 
-import com.example.ssssksss_blog.blog.dao.Post;
 import com.example.ssssksss_blog.blog.dao.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,7 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Description :
  */
 public interface UserRepository extends JpaRepository<User,Long> {
-//    잠시 보류
-//    void saveUser(String name, String password, String email);
-
+    Boolean existsByEmail(String email);
+    Boolean existsByCuid(String cuid);
+    User findByEmail(String email);
 }

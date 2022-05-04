@@ -29,29 +29,29 @@ public ResponseEntity addPost(@RequestBody PostDto postDto) {
     return postService.addPost(postDto);
 }
 //    포스트 전체 조회
-@RequestMapping(value="/ssssksss/post/read", method= RequestMethod.GET)
+@RequestMapping(value="/ssssksss/posts/read", method= RequestMethod.GET)
 public ResponseEntity readPost(
         @RequestParam(name = "firstHref") String firstHref,
         @RequestParam(name = "secondHref") String secondHref
 ) {
     String fullHref = "/" + firstHref + "/" + secondHref;
-    System.out.println("fullHref : " + fullHref);
-    return postService.arrayPost(fullHref);
+    return postService.readPosts(fullHref);
 }
 //    포스트 1개 조회
-@RequestMapping(value="/ssssksss/post/view", method= RequestMethod.GET)
+@RequestMapping(value="/ssssksss/post/read", method= RequestMethod.GET)
 public ResponseEntity viewPost(
         @RequestParam(name = "firstHref") String firstHref,
         @RequestParam(name = "secondHref") String secondHref,
-        @RequestParam(name = "id") int id
+        @RequestParam(name = "id") Long id
 ) {
     String fullHref = "/" + firstHref + "/" + secondHref;
-    return postService.viewPost(fullHref,id);
+    return postService.readPost(fullHref,id);
 }
 //    포스트 삭제
-@RequestMapping(value="/ssssksss/post/remove", method= RequestMethod.POST)
-public ResponseEntity removePost(@RequestBody HashMap<String,Object> obj) {
-    Long id = Long.parseLong(String.valueOf(obj.get("id")));
+@RequestMapping(value="/ssssksss/post/remove", method= RequestMethod.DELETE)
+//public ResponseEntity removePost(@RequestBody HashMap<String,Object> obj) {
+public ResponseEntity removePost(Long id) {
+//    Long id = Long.parseLong(String.valueOf(obj.get("id")));
     return postService.removePost(id);
 }
 //    포스트 수정
