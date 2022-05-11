@@ -1,6 +1,8 @@
 package com.example.ssssksss_blog.blog.service;
 
+import com.example.ssssksss_blog.blog.dao.BaseTimeEntity;
 import com.example.ssssksss_blog.blog.dao.Post;
+import com.example.ssssksss_blog.blog.dao.PostContent;
 import com.example.ssssksss_blog.blog.dao.PostList;
 import com.example.ssssksss_blog.blog.dto.PostDto;
 import com.example.ssssksss_blog.blog.repository.PostRepository;
@@ -10,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -32,11 +36,10 @@ public class PostService {
     }
 
     public ResponseEntity addPost(PostDto postDto) {
-//        PostContent postContent = PostContent.builder().content(postDto.getContent()).build();
-        postRepository.savePost(postDto.getTitle(), postDto.getDescription(), postDto.getContent(), postDto.getSecondHref());
-//        Post post = Post.builder().title(postDto.getTitle()).description(postDto.getDescription()).content(postDto.getContent()).secondHref(postDto.getSecondHref())
-//                .postContent(postContent).build();
-//        postRepository.save(post);
+        PostContent postContent = PostContent.builder().content(postDto.getContent()).build();
+        Post post = Post.builder().title(postDto.getTitle()).description(postDto.getDescription())
+                .secondHref(postDto.getSecondHref()).postContent(postContent).build();
+        postRepository.save(post);
         return ResponseEntity.ok().body(new ResponseStatusDto(200, "Post Success"));
     }
 
@@ -52,29 +55,53 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public ResponseEntity readPost(String fullHref, Long id) {
-//        Post optionalPost = postRepository.findBySecondHrefAndId(fullHref,id);
-
-        Optional<Post> optionalPost = postRepository.findPost(fullHref,id);
-        if(optionalPost.isEmpty()){
+//        Optional<Post> optionalPost = postRepository.findPost(fullHref,id);
+//        if(postRepository.isEmpty()){
+//            return ResponseEntity.ok().body(new ResponseStatusDto(200,"아무런 내용이 없습니다."));
+//        }
+        if(!postRepository.existsBySecondHrefAndId(fullHref,id)) {
             return ResponseEntity.ok().body(new ResponseStatusDto(200,"아무런 내용이 없습니다."));
-        }
-        HashMap<String,Object> hashMap = new HashMap<>();
-//        hashMap.put("post", optionalPost);
-        hashMap.put("post", optionalPost.get());
+        } else {
+          Post post = postRepository.findBySecondHrefAndId(fullHref,id);
+            PostDto postDto = PostDto.builder()
+                    .id(post.getId())
+                    .userId(post.getUserId())
+                    .description(post.getDescription())
+                    .title(post.getTitle())
+                    .likeNumber(post.getLikeNumber())
+                    .content(post.getPostContent().getContent())
+                    .modifiedAt(post.getBaseTimeEntity().getModifiedAt())
+                    .build();
+          HashMap<String,Object> hashMap = new HashMap<>();
+          hashMap.put("post", postDto);
 
         return ResponseEntity.ok().body(new ResponseDataDto(200, "read success",hashMap));
+        }
     }
-
+    @Transactional
     public ResponseEntity removePost(Long id) {
-//        postRepository.deleteById(id);
         postRepository.deletePost(id);
-
         return ResponseEntity.ok().body(new ResponseStatusDto(200,"Post Success"));
     }
 
+    @Transactional
     public ResponseEntity updatePost(PostDto postDto) {
-        postRepository.updatePost(Long.parseLong(String.valueOf(postDto.getId())),postDto.getTitle(),
-                postDto.getDescription(),postDto.getContent());
+//        id, title, description, content, secondHref
+        Optional<Post> post = postRepository.findById(postDto.getId());
+        post.get().setDescription(postDto.getDescription());
+        post.get().setTitle(postDto.getTitle());
+        PostContent postContent = post.get().getPostContent();
+        postContent.setContent(postDto.getContent());
+        post.get().setPostContent(postContent);
+        postRepository.save(post.get());
         return ResponseEntity.ok().body(new ResponseStatusDto(200,"Post Update Success"));
     }
+
+//    public ResponseEntity addPost(PostDto postDto) {
+//        PostContent postContent = PostContent.builder().content(postDto.getContent()).build();
+//        Post post = Post.builder().title(postDto.getTitle()).description(postDto.getDescription())
+//                .secondHref(postDto.getSecondHref()).postContent(postContent).build();
+//        postRepository.save(post);
+//        return ResponseEntity.ok().body(new ResponseStatusDto(200, "Post Success"));
+//    }
 }

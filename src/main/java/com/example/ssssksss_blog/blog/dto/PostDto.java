@@ -2,7 +2,6 @@ package com.example.ssssksss_blog.blog.dto;
 
 import lombok.*;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 /**
@@ -19,13 +18,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 public class PostDto {
-    private int id;
+    private Long id;
     private String title;
     private String description;
     private String secondHref;
     private String content;
     private Integer position;
     private Integer likeNumber;
-    private boolean accessYn;
+    private Boolean accessYn;
     private String userId;
+    private LocalDateTime modifiedAt;
 }

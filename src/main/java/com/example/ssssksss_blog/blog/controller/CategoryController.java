@@ -19,27 +19,28 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @RequestMapping(value="/ssssksss/first-category/add", method= RequestMethod.POST)
+    @RequestMapping(value="/ssssksss/first-category", method= RequestMethod.POST)
     public ResponseEntity addFirstCategory(@RequestBody FirstCategoryDto firstCategoryDto) {
         return categoryService.addFirstCategory(firstCategoryDto);
     }
-    @RequestMapping(value="/ssssksss/first-category/read", method= RequestMethod.GET)
+    @RequestMapping(value="/ssssksss/first-category", method= RequestMethod.GET)
     public ResponseEntity readFirstCategory() {
         return categoryService.readFirstCategory();
     }
-    @RequestMapping(value="/ssssksss/first-category/remove", method= RequestMethod.POST)
+
+    @RequestMapping(value="/ssssksss/first-category", method= RequestMethod.DELETE)
     public ResponseEntity removeFirstCategory(@RequestBody FirstCategoryDto firstCategoryDto) {
         return categoryService.removeFirstCategory(firstCategoryDto);
     }
-    @RequestMapping(value="/ssssksss/second-category/add", method= RequestMethod.POST)
+    @RequestMapping(value="/ssssksss/second-category", method= RequestMethod.POST)
     public ResponseEntity addSecondCategory(@RequestBody SecondCategoryDto secondCategoryDto) {
         return categoryService.addSecondCategory(secondCategoryDto);
     }
-    @RequestMapping(value="/ssssksss/second-category/read", method= RequestMethod.GET)
+    @RequestMapping(value="/ssssksss/second-category", method= RequestMethod.GET)
     public ResponseEntity readSecondCategory(@RequestParam(name = "firstHref") String firstHref) {
         return categoryService.readSecondCategory(firstHref);
     }
-    @RequestMapping(value="/ssssksss/second-category/remove", method= RequestMethod.POST)
+    @RequestMapping(value="/ssssksss/second-category", method= RequestMethod.DELETE)
     public ResponseEntity removeSecondCategory(@RequestBody SecondCategoryDto secondCategoryDto) {
         return categoryService.removeSecondCategory(secondCategoryDto);
     }

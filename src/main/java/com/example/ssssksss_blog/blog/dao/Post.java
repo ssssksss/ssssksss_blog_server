@@ -2,6 +2,7 @@ package com.example.ssssksss_blog.blog.dao;
 
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -17,12 +18,15 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Table(name="post")
-//@DynamicInsert
-public class Post extends BaseTimeEntity {
+@DynamicInsert
+@DynamicUpdate
+@ToString
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,14 +41,19 @@ public class Post extends BaseTimeEntity {
     private Integer likeNumber;
     @Column(name="user_id", nullable = false, columnDefinition = "varchar(255) default 'ssssksss'")
     private String userId;
-    @Column(nullable = false, columnDefinition = "MEDIUMTEXT")
-    private String content;
+    @Column(nullable = false, columnDefinition = "int default 0")
+    private Integer position;
 //
-//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinTable(name="POST_POST.CONTENT",
-//            joinColumns = @JoinColumn(name="POST_ID"),
-//            inverseJoinColumns = @JoinColumn(name="POST.CONTENT_ID")
-//    )
-//    private PostContent postContent;
+    @Embedded
+    private BaseTimeEntity baseTimeEntity;
+
+    @OneToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+    @JoinTable(name="POST_POST_CONTENT",
+            joinColumns = @JoinColumn(name="POST_ID"),
+            inverseJoinColumns = @JoinColumn(name="POST_CONTENT_ID")
+    )
+    private PostContent postContent;
+
+
 
 }

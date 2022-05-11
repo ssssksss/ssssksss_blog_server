@@ -18,7 +18,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 //}
 
 // datasource에러가 자꾸 발생해서 뭔가 수정이  필요할듯 싶다...
-@EnableJpaAuditing
+//@EnableJpaAuditing
 @SpringBootApplication
 public class SsssksssBlogApplication extends SpringBootServletInitializer {
 //	public static final String APPLICATION_LOCATIONS = "spring.config.location="

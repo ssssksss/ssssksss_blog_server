@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -24,7 +25,8 @@ import java.time.LocalDateTime;
 @Builder
 @Table(name="user")
 @DynamicUpdate
-public class User extends BaseTimeEntity {
+@DynamicInsert
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +49,9 @@ public class User extends BaseTimeEntity {
     @Builder.Default private int loginCount = 0;
     @Column(name="email_verification", nullable = false, columnDefinition = "tinyint(1) NOT NULL default 0")
     @Builder.Default private Boolean emailVerification = false;
+
+    @Embedded
+    private BaseTimeEntity baseTimeEntity;
 }
 
 

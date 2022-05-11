@@ -20,9 +20,10 @@ import java.util.Date;
  * Date : 2022-04-23
  * Description :
  */
+@Service
 public class JwtTokenManager {
 
-    private byte[] encodingKey = DatatypeConverter.parseBase64Binary("");
+    private byte[] encodingKey = DatatypeConverter.parseBase64Binary("E2BBFD358D01113E9563FB3865582DA90D056C658099DEB46F2FFF95BC67C2EC");
     private SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
     private Key key = Keys.hmacShaKeyFor(encodingKey);
     private String jwtSecret;

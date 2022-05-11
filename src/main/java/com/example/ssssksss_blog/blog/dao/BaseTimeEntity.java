@@ -1,14 +1,11 @@
 package com.example.ssssksss_blog.blog.dao;
 
-import lombok.Builder;
-import lombok.Getter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -18,9 +15,13 @@ import java.time.LocalDateTime;
  * Date : 2022-04-29
  * Description :
  */
+//@MappedSuperclass
+//@EntityListeners(AuditingEntityListener.class)
+@Embeddable
 @Getter
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@Setter
+@DynamicUpdate
+@DynamicInsert
 public class BaseTimeEntity {
 
     @Column(name="create_at", nullable = false, columnDefinition = "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP")
@@ -32,7 +33,7 @@ public class BaseTimeEntity {
     @Column(name="delete_at", nullable = false, columnDefinition = "DATETIME NOT NULL DEFAULT '9999-12-31 23:59:59'")
     private LocalDateTime deleteAt;
 
-    @Column(name="access_yn", nullable = false, columnDefinition = "tinyint(1) default 1")
+    @Column(name="access_yn", insertable = false ,nullable = false, columnDefinition = "tinyint(1) default 1")
     private Boolean accessYn;
 
 }
